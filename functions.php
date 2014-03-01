@@ -67,6 +67,8 @@ class Media_Library {
 
 	/**
 	 * Redate the attachment to be the image's original creation date
+	 * 
+	 * @todo also relocate the image files
 	 */
 	public function filter_wp_generate_attachment_metadata( $metadata, $attachment_id ) {
 		global $wpdb;
