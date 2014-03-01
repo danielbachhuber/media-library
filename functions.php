@@ -30,6 +30,8 @@ class Media_Library {
 
 		add_action( 'add_attachment', array( $this, 'action_add_attachment' ) );
 
+		add_action( 'wp_enqueue_scripts', array( $this, 'action_wp_enqueue_scripts' ) );
+
 	}
 
 	/**
@@ -73,6 +75,15 @@ class Media_Library {
 		global $wpdb;
 
 		add_filter( 'wp_generate_attachment_metadata', array( $this, 'filter_wp_generate_attachment_metadata' ), 10, 2 );
+
+	}
+
+	/**
+	 * Load our theme's styles
+	 */
+	public function action_wp_enqueue_scripts() {
+
+		wp_enqueue_style( 'bootstrap', get_stylesheet_directory_uri() . '/lib/bootstrap/dist/css/bootstrap.css' );
 
 	}
 
