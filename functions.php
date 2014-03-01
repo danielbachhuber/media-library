@@ -84,6 +84,7 @@ class Media_Library {
 	public function action_wp_enqueue_scripts() {
 
 		wp_enqueue_style( 'bootstrap', get_stylesheet_directory_uri() . '/lib/bootstrap/dist/css/bootstrap.css' );
+		wp_enqueue_style( 'style', get_stylesheet_uri() );
 
 	}
 
