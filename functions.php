@@ -26,6 +26,8 @@ class Media_Library {
 
 		add_action( 'pre_get_posts', array( $this, 'action_pre_get_posts' ) );
 
+		add_action( 'add_attachment', array( $this, 'action_add_attachment' ) );
+
 	}
 
 	/**
@@ -51,6 +53,31 @@ class Media_Library {
 			$query->query_vars['post_status'] = 'inherit';
 		}
 
+	}
+
+	/**
+	 * When an attachment is uploaded, let's hook into this business
+	 */
+	public function action_add_attachment( $attachment_id ) {
+		global $wpdb;
+
+		add_filter( 'wp_generate_attachment_metadata', array( $this, 'filter_wp_generate_attachment_metadata' ), 10, 2 );
+
+	}
+
+	/**
+	 * Redate the attachment to be the image's original creation date
+	 */
+	public function filter_wp_generate_attachment_metadata( $metadata, $attachment_id ) {
+		global $wpdb;
+
+		if ( ! empty( $metadata['image_meta']['created_timestamp'] ) ) {
+			$wpdb->update( $wpdb->posts, array( 'post_date' => date( 'Y-m-d H:i:s', (int)$metadata['image_meta']['created_timestamp'] ) ), array( 'ID' => $attachment_id ) );
+		}
+
+		remove_filter( 'wp_generate_attachment_metadata', array( $this, 'filter_wp_generate_attachment_metadata' ) );
+
+		return $metadata;
 	}
 
 	/**
