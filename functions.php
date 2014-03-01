@@ -9,7 +9,9 @@ class Media_Library {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new Media_Library;
 			self::$instance->setup_actions();
+			self::$instance->setup_filters();
 			self::$instance->setup_theme();
+
 		}
 
 		return self::$instance;
@@ -27,6 +29,15 @@ class Media_Library {
 		add_action( 'pre_get_posts', array( $this, 'action_pre_get_posts' ) );
 
 		add_action( 'add_attachment', array( $this, 'action_add_attachment' ) );
+
+	}
+
+	/**
+	 * Filters specific to the theme
+	 */
+	private function setup_filters() {
+
+		add_filter( 'pre_option_posts_per_page', array( $this, 'filter_posts_per_page' ) );
 
 	}
 
@@ -80,6 +91,13 @@ class Media_Library {
 		remove_filter( 'wp_generate_attachment_metadata', array( $this, 'filter_wp_generate_attachment_metadata' ) );
 
 		return $metadata;
+	}
+
+	/**
+	 * Change the default posts per page
+	 */
+	public function filter_posts_per_page() {
+		return 50;
 	}
 
 	/**
