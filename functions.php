@@ -106,7 +106,8 @@ class Media_Library {
 	private function get_image_sizes() {
 
 		return array(
-			'square_medium' => array( 200, 200 )
+			'square_medium' => array( 200, 200 ),
+			'full'          => array( 1200, 1200 ),
 		);
 
 	}
