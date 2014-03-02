@@ -7,7 +7,4 @@ Author URI:     http://danielbachhuber.com
 Version:        0.1.0
 */
 
-.home .attachment-square-medium img {
-	max-width: 100%;
-	height: auto;
-}
+/* ALL STYLES SHOULD BE ADDED VIA ./assets/stylesheets/sass/core.scss */
